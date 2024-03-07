@@ -15,6 +15,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui"), require("tailwindcss-react-aria-components")],
+  daisyui: {
+    themes: ["pastel"],
+  },
 };
 export default config;
