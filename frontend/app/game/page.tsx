@@ -1,10 +1,9 @@
 "use client";
-
-import React, { useState } from "react";
-import Board from "./Board";
+import React, { useRef, useState } from "react";
+import Board from "../components/Board";
 import { calculateWinner, checkDraw } from "../utils/gamelogic";
 
-const Game: React.FC = () => {
+export default function GamePage() {
   const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
@@ -22,11 +21,6 @@ const Game: React.FC = () => {
     setXIsNext(!xIsNext);
   };
 
-  const jumpTo = (step: number) => {
-    setStepNumber(step);
-    setXIsNext(step % 2 === 0);
-  };
-
   const current = history[stepNumber];
   const winner = calculateWinner(current.squares);
   const isDraw = checkDraw(current.squares);
@@ -40,26 +34,14 @@ const Game: React.FC = () => {
     status = `Next player: ${xIsNext ? "X" : "O"}`;
   }
 
-  const moves = history.map((step, move) => {
-    const desc = move ? `Go to move #${move}` : "Go to game start";
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{desc}</button>
-      </li>
-    );
-  });
-
   return (
-    <div className="grid grid-cols-3 gap-4">
-      <div className="col-span-2">
-        <Board squares={current.squares} onClick={handleClick} />
-      </div>
-      <div className="flex flex-col">
-        <div>{status}</div>
-        <ol>{moves}</ol>
-      </div>
+    <div className="flex flex-col items-center">
+      <div className="flex flex-col p-10 text-2xl font-semibold">{status}</div>
+      <Board
+        className="col-span-2"
+        squares={current.squares}
+        onClick={handleClick}
+      />
     </div>
   );
-};
-
-export default Game;
+}

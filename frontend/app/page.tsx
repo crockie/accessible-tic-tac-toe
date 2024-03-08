@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import NavBar from "./components/NavBar";
 import DialogButton from "./components/DialogButton";
 import { generateGameID } from "./utils/gamelogic";
 
@@ -35,9 +34,10 @@ export default function Home() {
 
   return (
     <main>
-      <NavBar />
       <div className="flex flex-col space-y-3 m-5 items-center">
-        <h1 className="text-2xl text-center p-10">Welcome to Tic-Tac-Toe</h1>
+        <h1 className="text-2xl text-center p-10 font-semibold">
+          Welcome to Tic-Tac-Toe
+        </h1>
         <DialogTrigger>
           <Button className="btn btn-secondary w-48" onPress={generateGameId}>
             Start Game
@@ -57,7 +57,7 @@ export default function Home() {
                     <TextField autoFocus className="space-x-5 m-5">
                       <Label className="text-lg">Name</Label>
                       <Input
-                        className="text-lg text-pretty"
+                        className="text-lg text-pretty p-2"
                         placeholder="Enter your name here"
                       />
                     </TextField>
@@ -100,14 +100,14 @@ export default function Home() {
                     <TextField autoFocus className="space-x-5 m-5">
                       <Label className="text-lg">Name</Label>
                       <Input
-                        className="text-lg text-pretty"
+                        className="text-lg text-pretty p-2"
                         placeholder="Enter your name here"
                       />
                     </TextField>
-                    <TextField autoFocus className="space-x-5 m-5">
+                    <TextField className="space-x-5 m-5">
                       <Label className="text-lg">Game</Label>
                       <Input
-                        className="text-lg text-pretty"
+                        className="text-lg text-pretty p-2"
                         placeholder="Enter game ID here"
                       />
                     </TextField>
