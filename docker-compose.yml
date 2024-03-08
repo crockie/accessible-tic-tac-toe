@@ -1,0 +1,24 @@
+services:
+  frontend:
+    image: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    restart: always
+    networks:
+      - tic-tac-toe
+  server:
+    image: backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    restart: always
+    networks:
+      - tic-tac-toe
+
+networks:
+  tic-tac-toe:
