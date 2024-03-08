@@ -17,7 +17,7 @@ const Square: React.FC<SquareProps> = ({ value, onClick }) => {
   return (
     <Button
       onPress={onClick}
-      className="flex justify-center items-center border-2 border-gray-200 w-full h-full sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32"
+      className="flex justify-center items-center border-2 border-gray-200 size-16 md:size-24 lg:size-32"
     >
       <VisuallyHidden>{value}</VisuallyHidden>
       <div className="text-2xl font-bold">{value}</div>

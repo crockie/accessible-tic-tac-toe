@@ -14,7 +14,7 @@ const Board: React.FC<BoardProps> = ({ squares, onClick, className }) => {
 
   return (
     <div
-      className={`grid grid-cols-3 grid-rows-3 justify-items-center w-full gap-4 sm:w-64 sm:h-64 md:w-96 md:h-96 lg:w-128 lg:h-128 ${className}`}
+      className={`grid grid-cols-3 grid-rows-3 justify-items-center gap-4 sm:w-64 sm:h-64 md:w-96 md:h-96 lg:w-128 lg:h-128 ${className}`}
     >
       {Array(9)
         .fill(0)
