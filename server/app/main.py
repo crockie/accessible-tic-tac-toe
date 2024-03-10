@@ -1,10 +1,22 @@
 from fastapi import FastAPI
-from app.sockets import sio_app
+from fastapi.middleware.cors import CORSMiddleware
+from sockets import sio_app
 
 app = FastAPI()
-app.mount("/ws", app=sio_app)
+
+origins = ["http://localhost:3000"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.mount("/", app=sio_app)
 
 
-@app.get("/")
+@app.get("/test")
 def read_root():
     return {"message": "hello world!"}

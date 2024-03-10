@@ -22,7 +22,7 @@ const checkDraw = (squares: string[]): boolean => {
 };
 
 const generateGameID = (): string => {
-  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const chars = "abcdefghijkmnopqrstuvwxyz123456789";
   let gameId = "";
   for (let i = 0; i < 6; i++) {
     gameId += chars.charAt(Math.floor(Math.random() * chars.length));
