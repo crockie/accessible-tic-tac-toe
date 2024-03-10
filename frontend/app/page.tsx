@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import DialogButton from "./components/DialogButton";
 import { generateGameID } from "./utils/gamelogic";
@@ -94,29 +93,45 @@ export default function Home() {
             Create Game
           </Button>
           <ModalOverlay className="fixed inset-0 z-10 overflow-y-auto bg-black/25 flex min-h-full items-center justify-center p-4 text-center backdrop-blur">
-            <Modal className="w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
+            <Modal
+              aria-labelledby="dialogTitle"
+              aria-describedby="dialogDescription"
+              className="w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl"
+            >
               <Dialog className="flex justify-center backdrop-blur text-center">
                 {({ close }) => (
                   <form>
                     <Heading
+                      id="dialogTitle"
                       slot="title"
                       className="text-2xl font-semibold leading-6 my-0 text-slate-700"
                       aria-hidden="true"
                     >
                       Create Game
                     </Heading>
-                    <TextField autoFocus className="space-x-5 m-5">
-                      <Label className="text-lg">Name</Label>
+                    <TextField className="space-x-5 m-5">
+                      <Label htmlFor="playerName" className="text-lg">
+                        Name
+                      </Label>
                       <Input
+                        id="playerName"
+                        aria-required
                         className="text-lg text-pretty p-2"
                         placeholder="Enter your name here"
                         onChange={(e) => setPlayerName(e.target.value)}
                       />
                     </TextField>
-                    <p className="text-lg mt-5">
-                      Share this Game ID with your friend:
-                    </p>
-                    <p className="text-lg text-center font-bold">{gameId}</p>
+                    <section
+                      id="dialogDescription"
+                      aria-labelledby="gameIdHeading"
+                    >
+                      <h2 id="gameIdHeading" className="text-lg mt-5">
+                        Share this Game ID with your friend:
+                      </h2>
+                      <p id="gameId" className="text-lg text-center font-bold">
+                        {gameId}
+                      </p>
+                    </section>
                     <div className="mt-6 flex justify-end gap-2">
                       <DialogButton
                         className="bg-slate-200 text-slate-800 hover:border-slate-300 pressed:bg-slate-300"
@@ -144,27 +159,40 @@ export default function Home() {
         <DialogTrigger>
           <Button className="btn btn-secondary w-48">Join Game</Button>
           <ModalOverlay className="fixed inset-0 z-10 overflow-y-auto bg-black/25 flex min-h-full items-center justify-center p-4 text-center backdrop-blur">
-            <Modal className="w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl">
+            <Modal
+              aria-labelledby="dialogTitle"
+              aria-describedby="dialogDescription"
+              className="w-full max-w-md overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl"
+            >
               <Dialog className="flex justify-center backdrop-blur text-center">
                 {({ close }) => (
                   <form>
                     <Heading
+                      id="dialogTitle"
                       slot="title"
                       className="text-2xl font-semibold leading-6 my-0 text-slate-700"
                     >
                       Join Game
                     </Heading>
-                    <TextField autoFocus className="space-x-5 m-5">
-                      <Label className="text-lg">Name</Label>
+                    <TextField className="space-x-5 m-5">
+                      <Label htmlFor="playerName" className="text-lg">
+                        Name
+                      </Label>
                       <Input
+                        id="playerName"
+                        aria-required
                         className="text-lg text-pretty p-2"
                         placeholder="Enter your name here"
                         onChange={(e) => setPlayerName(e.target.value)}
                       />
                     </TextField>
                     <TextField className="space-x-5 m-5">
-                      <Label className="text-lg">Game ID</Label>
+                      <Label htmlFor="gameId" className="text-lg">
+                        Game ID
+                      </Label>
                       <Input
+                        id="gameId"
+                        aria-required
                         className="text-lg text-pretty p-2"
                         placeholder="Enter game ID here"
                         onChange={(e) => setGameId(e.target.value)}

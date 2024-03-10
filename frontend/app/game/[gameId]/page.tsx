@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import Board from "../../components/Board";
-import { Button } from "react-aria-components";
+import Announcer from "../../components/Announcer";
 
 interface ServerToClientEvents {
   noArg: () => void;
@@ -123,6 +123,7 @@ export default function GamePage({ params }: { params: { gameId: string } }) {
       }
       if (status === "draw") {
         setGameStatus("draw");
+        alert("It is a draw!");
       }
 
       console.log("Next turn: ", next_turn, playerSymbol);
@@ -162,43 +163,51 @@ export default function GamePage({ params }: { params: { gameId: string } }) {
   };
 
   return (
-    <div className="flex flex-col items-center p-10 text-center text-lg">
-      <div className="mb-8">
-        <div className="mb-3">
-          <span className="font-semibold">Game ID: </span>
-          <span>{gameId}</span>
-        </div>
-        <div>
-          <span className="font-semibold">Player:</span>{" "}
-          <span className="mr-2">{playerName}</span>
-          <span className="font-semibold">{playerSymbol}</span>
-        </div>
-        <div>
-          <span className="font-semibold">Opponent:</span>{" "}
-          <span className="mr-2">{opponentName}</span>
-          <span className="font-semibold">{opponentSymbol}</span>
-        </div>
-        {opponentJoined && (
-          <div className="mt-3">
-            {gameStatus === "win" ? (
-              <span className="font-semibold">{winner} wins!</span>
-            ) : gameStatus === "draw" ? (
-              <span className="font-semibold">It is a draw!</span>
-            ) : (
-              <>
-                <span className="font-semibold">Turn: </span>
-                <span>{isPlayerTurn ? "Your turn" : "Opponent's turn"}</span>
-              </>
+    <main aria-label="Game Page">
+      <Announcer squares={board.squares} />
+      <div className="flex flex-col items-center p-10 text-center text-lg">
+        <div className="mb-8">
+          <div className="mb-3">
+            <span className="font-semibold">Game ID: </span>
+            <span>{gameId}</span>
+          </div>
+          <div role="status" aria-live="polite">
+            <div>
+              <span className="font-semibold">Player:</span>{" "}
+              <span className="mr-2">{playerName}</span>
+              <span className="font-semibold">{playerSymbol}</span>
+            </div>
+            <div>
+              <span className="font-semibold">Opponent:</span>{" "}
+              <span className="mr-2">{opponentName}</span>
+              <span className="font-semibold">{opponentSymbol}</span>
+            </div>
+
+            {opponentJoined && (
+              <div className="mt-3">
+                {gameStatus === "win" ? (
+                  <span className="font-semibold">{winner} wins!</span>
+                ) : gameStatus === "draw" ? (
+                  <span className="font-semibold">It is a draw!</span>
+                ) : (
+                  <>
+                    <span className="font-semibold">Turn: </span>
+                    <span>
+                      {isPlayerTurn ? "Your turn" : "Opponent's turn"}
+                    </span>
+                  </>
+                )}
+              </div>
+            )}
+            {!opponentJoined && (
+              <div className="mt-3">
+                <span className="font-semibold">Waiting for opponent...</span>
+              </div>
             )}
           </div>
-        )}
-        {!opponentJoined && (
-          <div className="mt-3">
-            <span className="font-semibold">Waiting for opponent...</span>
-          </div>
-        )}
+        </div>
+        <Board squares={board.squares} onClick={handleClick} />
       </div>
-      <Board squares={board.squares} onClick={handleClick} />
-    </div>
+    </main>
   );
 }

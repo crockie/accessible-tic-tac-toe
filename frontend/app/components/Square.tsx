@@ -11,12 +11,14 @@ interface SquareProps {
    */
   value: "X" | "O" | null;
   onClick: () => void;
+  description: string;
 }
 
-const Square: React.FC<SquareProps> = ({ value, onClick }) => {
+const Square: React.FC<SquareProps> = ({ value, onClick, description }) => {
   return (
     <Button
       onPress={onClick}
+      aria-label={`${description} is ${value ? ` ${value}` : " empty"}`}
       className="flex justify-center items-center border-2 border-gray-200 size-16 md:size-24 lg:size-32"
     >
       <VisuallyHidden>{value}</VisuallyHidden>
