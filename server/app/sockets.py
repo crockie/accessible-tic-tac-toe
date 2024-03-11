@@ -37,6 +37,11 @@ async def join_game(sid: str, game_id: str, player_name: str):
 
 @sio.event
 async def in_game(sid: str, game_id: str, player_name: str):
+    """
+    This function handles when a player joins a game room
+    @param game_id: The id of the game
+    @param player_name: The name of the player
+    """
     # Join game room
     await sio.enter_room(sid, game_id)
     symbol = "X" if games[game_id]["players"]["X"] == player_name else "O"
@@ -68,22 +73,16 @@ async def in_game(sid: str, game_id: str, player_name: str):
 
 
 @sio.event
-def handle_player_disconnect(game_id: str):
-    """
-    This function handles the disconnection of a player from a game
-    @param game_id: The id of the game
-    """
-    sio.leave_room(sio.sid, game_id)
-
-    # Store moves and players in database
-    # ...
-
-    # Remove game from games
-    del games[game_id]
-
-
-@sio.event
 async def handle_move(sid, data):
+    """
+    This function handles when a player makes a move.
+    @param data: {
+        "game_id": The id of the game,
+        "symbol": The symbol of the player,
+        "board_index": The index of the board where the player made the move
+    }
+
+    """
     game_id = data["game_id"]
     symbol = data["symbol"]
     board_index = data["board_index"]
@@ -135,12 +134,12 @@ def calculate_winner(board):
     winning_combinations = [
         [0, 1, 2],
         [3, 4, 5],
-        [6, 7, 8],  # Rows
+        [6, 7, 8],
         [0, 3, 6],
         [1, 4, 7],
-        [2, 5, 8],  # Columns
+        [2, 5, 8],
         [0, 4, 8],
-        [2, 4, 6],  # Diagonals
+        [2, 4, 6],
     ]
     for combination in winning_combinations:
         if board[combination[0]] == board[combination[1]] == board[combination[2]]:

@@ -73,19 +73,12 @@ export default function GamePage({ params }: { params: { gameId: string } }) {
   useEffect(() => {
     if (playerName !== "") {
       socket?.emit("in_game", gameId, playerName);
-      console.log("Emitting in_game: ", gameId, playerName);
     }
 
     socket?.on("game_start", (data) => {
       const { player1, player2, symbol1, symbol2 } = data;
 
       setOpponentJoined(true);
-
-      console.log("Game started");
-      console.log("Player 1: ", player1);
-      console.log("Player 2: ", player2);
-      console.log("Symbol 1: ", symbol1);
-      console.log("Symbol 2: ", symbol2);
 
       if (playerName === player1) {
         setPlayerSymbol(symbol1);
@@ -100,11 +93,7 @@ export default function GamePage({ params }: { params: { gameId: string } }) {
     });
 
     socket?.on("game_update", (data) => {
-      console.log("Game update: ", data);
       const { status, winner, move, next_turn } = data;
-      console.log("Status: ", status);
-      console.log("Winner: ", winner);
-      console.log("Move: ", move);
 
       if (move) {
         setBoard((prevBoard) => {
@@ -126,7 +115,6 @@ export default function GamePage({ params }: { params: { gameId: string } }) {
         alert("It is a draw!");
       }
 
-      console.log("Next turn: ", next_turn, playerSymbol);
       if (next_turn === playerSymbol) {
         setIsPlayerTurn(true);
       }
@@ -159,7 +147,6 @@ export default function GamePage({ params }: { params: { gameId: string } }) {
       symbol: playerSymbol,
       board_index: i,
     });
-    console.log("Emitting handle_move: ", gameId, playerSymbol, i);
   };
 
   return (

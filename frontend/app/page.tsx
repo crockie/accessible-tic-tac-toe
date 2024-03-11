@@ -71,7 +71,6 @@ export default function Home() {
       alert("Game room is full! Please try creating a new game.");
       return;
     }
-    console.log("Game ID: ", gameId);
     socket?.emit("join_game", gameId, playerName);
     localStorage.setItem("playerName", playerName);
     if (!isGameFull) {
